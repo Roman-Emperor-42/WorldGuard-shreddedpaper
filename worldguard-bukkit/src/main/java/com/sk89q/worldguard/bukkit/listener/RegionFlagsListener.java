@@ -34,7 +34,6 @@ import com.sk89q.worldguard.protection.flags.StateFlag;
 import com.sk89q.worldguard.protection.regions.RegionQuery;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -62,11 +61,8 @@ public class RegionFlagsListener extends AbstractListener {
 
         RegionQuery query = WorldGuard.getInstance().getPlatform().getRegionContainer().createQuery();
 
-        Block block;
-        if ((block = event.getCause().getFirstBlock()) != null) {
-            if (Materials.isPistonBlock(block.getType())) {
-                event.filter(testState(query, Flags.PISTONS), false);
-            }
+        if (Materials.isPistonBlock(event.getEffectiveMaterial())) {
+            event.filter(testState(query, Flags.PISTONS), false);
         }
 
         if (event.getCause().find(EntityType.SNOW_GOLEM) != null) {
@@ -85,11 +81,8 @@ public class RegionFlagsListener extends AbstractListener {
         WorldConfiguration config = getWorldConfig(event.getWorld());
         RegionQuery query = WorldGuard.getInstance().getPlatform().getRegionContainer().createQuery();
 
-        Block block;
-        if ((block = event.getCause().getFirstBlock()) != null) {
-            if (Materials.isPistonBlock(block.getType())) {
-                event.filter(testState(query, Flags.PISTONS), false);
-            }
+        if (Materials.isPistonBlock(event.getEffectiveMaterial())) {
+            event.filter(testState(query, Flags.PISTONS), false);
         }
 
         if (event.getCause().find(EntityType.CREEPER) != null) { // Creeper
